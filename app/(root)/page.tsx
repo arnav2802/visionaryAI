@@ -5,8 +5,6 @@ import React from 'react'
    return (
      <div>
         <p>Home</p>
-
-        <UserButton afterSignOutUrl='/' />
      </div>
    )
  }
