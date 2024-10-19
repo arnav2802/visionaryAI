@@ -3,10 +3,6 @@
     "@typescript-eslint/no-explicit-any": "off"
   },
   "extends": ["next/core-web-vitals", "next/typescript"] 
-<<<<<<< HEAD
-}
-=======
 }
 
   
->>>>>>> 4216c5c2899e87440d1998fb19f692e565e9e9b5
