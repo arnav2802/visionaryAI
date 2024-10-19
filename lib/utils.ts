@@ -15,15 +15,15 @@ export const handleError = (error: unknown) => {
   if (error instanceof Error) {
     // This is a native JavaScript error (e.g., TypeError, RangeError)
     console.error(error.message);
-    throw new Error(Error: ${error.message});
+    throw new Error(`Error: ${error.message}`);
   } else if (typeof error === "string") {
     // This is a string error message
     console.error(error);
-    throw new Error(Error: ${error});
+    throw new Error(`Error: ${error}`);
   } else {
     // This is an unknown type of error
     console.error(error);
-    throw new Error(Unknown error: ${JSON.stringify(error)});
+    throw new Error(`Unknown error: ${JSON.stringify(error)}`);
   }
 };
 
@@ -81,7 +81,7 @@ export function removeKeysFromQuery({
     (key) => currentUrl[key] == null && delete currentUrl[key]
   );
 
-  return ${window.location.pathname}?${qs.stringify(currentUrl)};
+  return `${window.location.pathname}?${qs.stringify(currentUrl)}`;
 }
 
 // DEBOUNCE
@@ -123,7 +123,7 @@ export const download = (url: string, filename: string) => {
       a.href = blobURL;
 
       if (filename && filename.length)
-        a.download = ${filename.replace(" ", "_")}.png;
+        a.download = `${filename.replace(" ", "_")}.png`;
       document.body.appendChild(a);
       a.click();
     })
@@ -153,5 +153,5 @@ export const deepMergeObjects = (obj1: any, obj2: any) => {
     }
   }
 
-  return output;
+  return output;
 };
