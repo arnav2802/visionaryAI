@@ -1,4 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "rules": {
+    "@typescript-eslint/no-explicit-any": 2
+  }
+  {"extends": ["next/core-web-vitals", "next/typescript"]}
 }
+
+  
