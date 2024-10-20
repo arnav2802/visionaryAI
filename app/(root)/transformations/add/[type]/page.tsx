@@ -3,15 +3,18 @@ import TransformationForm from '@/components/shared/TransformationForm';
 import { transformationTypes } from '@/constants'
 import { getUserById } from '@/lib/actions/user.action';
 import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/dist/server/api-utils';
+import { redirect } from 'next/navigation';
 
 const AddTransformationTypePage = async ({ params: {type}}: SearchParamProps) => {
-  const transformation = transformationTypes[type];
   const { userId } = auth();
+  const transformation = transformationTypes[type];
 
-  if(!userId) redirect('/sign-in')
+  if(!userId) {
+    return redirect('/sign-in');
+  }
 
   const user = await getUserById(userId);
+
   return (
     <>
       <Header
@@ -19,12 +22,14 @@ const AddTransformationTypePage = async ({ params: {type}}: SearchParamProps) =>
       subtitle={transformation.subTitle}
       />
 
-      <TransformationForm 
-        action ="Add"
-        userId={user._id}
-        type={transformation.type as TransformationTypeKey}
-        creditBalance={user.creditBalance}
-      />
+      <section className="mt-10">
+        <TransformationForm 
+          action="Add"
+          userId={user._id}
+          type={transformation.type as TransformationTypeKey}
+          creditBalance={user.creditBalance}
+        />
+      </section>
     </>
   )
 }
