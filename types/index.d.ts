@@ -4,7 +4,7 @@
 declare type Createuserentry = {
     clerkId: string;
     email: string;
-    username: string;
+    username: string | null;
     firstName: string;
     lastName: string;
     photo: string;
