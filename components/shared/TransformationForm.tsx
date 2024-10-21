@@ -24,11 +24,14 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { aspectRatioOptions, defaultValues, transformationTypes } from "@/constants"
+import { aspectRatioOptions, creditFee, defaultValues, transformationTypes } from "@/constants"
 import { title } from "process"
 import { CustomField } from "./CustomField"
-import { use, useState } from "react"
-import { AspectRatioKey } from "@/lib/utils"
+import { use, useState, useTransition } from "react"
+import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils"
+import { updateCredits } from "@/lib/actions/user.action"
+import MediaUploader from "./MediaUploader"
+import TransformedImage from "./TransformedImage"
  
 export const formSchema = z.object({
     title: z.string(),
@@ -43,8 +46,9 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   const [image, setImage] = useState(data)
   const [newTransformation, setNewTransformation] = useState<Transformations | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isTransforming, seiIsTransforming] = useState(false);
+  const [isTransforming, setIsTransforming] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState(config)
+  const [isPending, startTransition] = useTransition()
 
   const initialValues = data && action === 'Update' ? {
     title: data?.title,
@@ -65,14 +69,48 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   }
 
   const onSelectFieldHandler = (value: string, onChangeField: (value: string) => void) => {
+    const imageSize = aspectRatioOptions[value as AspectRatioKey]
 
+    setImage((prevState: any) => ({
+      ...prevState,
+      aspectRation: imageSize.aspectRatio,
+      width: imageSize.width,
+      height: imageSize.height,
+    }))
+
+    setNewTransformation(transformationType.config);
+
+    return onChangeField(value)
   }
 
   const onInputChangeHandler = (fieldName: string, value: string, type: string, onChangeField: (value: string) => void) => {
+    debounce(() => {
+      setNewTransformation((prevState: any) => ({
+        ...prevState,
+        [type]: {
+          ...prevState,
+          [fieldName === 'prompt' ? 'prompt' : 'to']: value
+        }
+      }))
 
+      return onChangeField(value)
+    },1000);
   }
 
-  const onTransformHandler = () => {}
+  //TODO: Update creditFee to something else
+  const onTransformHandler = async () => {
+    setIsTransforming(true)
+    
+    setTransformationConfig(
+      deepMergeObjects(newTransformation, transformationConfig)
+    )
+
+    setNewTransformation(null)
+    
+    startTransition(async () => {
+      await updateCredits(userId, creditFee)
+    })
+  }
 
   return (
     <Form {...form}>
@@ -156,6 +194,32 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
             )}
           </div>
         )}
+
+        <div className="media-uploader-field">
+          <CustomField 
+            control={form.control}
+            name="publicId"
+            className="flex size-full flex-col"
+            render={({ field }) => (
+              <MediaUploader 
+                onValueChange={field.onChange}
+                setImage={setImage}
+                publicId={field.value}
+                image={image}
+                type={type}
+              />
+            )}
+          />
+
+          <TransformedImage 
+            image={image}
+            type={type}
+            title={form.getValues().title}
+            isTransforming={isTransforming}
+            setIsTransforming={setIsTransforming}
+            transformationConfig={transformationConfig}
+          />
+        </div>
 
         <div className="flex flex-col gap-4">
           <Button 
