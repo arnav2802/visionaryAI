@@ -24,16 +24,11 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-<<<<<<< HEAD
-import { defaultValues } from "@/constants"
-
-=======
 import { aspectRatioOptions, defaultValues, transformationTypes } from "@/constants"
 import { title } from "process"
 import { CustomField } from "./CustomField"
 import { use, useState } from "react"
 import { AspectRatioKey } from "@/lib/utils"
->>>>>>> 7e07ee05c00707cdd00698f0f648b9bbde7732ab
  
 export const formSchema = z.object({
     title: z.string(),
