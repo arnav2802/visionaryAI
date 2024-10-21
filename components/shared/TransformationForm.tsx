@@ -75,19 +75,6 @@ const TransformationForm = ({ action, data = null, type,  config = null }: Trans
     return onChangeField(value)
   }
 
-  const onInputChangeHandler = (fieldName: string, value: string, type: string, onChangeField: (value: string) => void) => {
-    debounce(() => {
-      setNewTransformation((prevState: any) => ({
-        ...prevState,
-        [type]: {
-          ...prevState,
-          [fieldName === 'prompt' ? 'prompt' : 'to']: value
-        }
-      }))
-
-      return onChangeField(value)
-    },1000);
-  }
 
   //TODO: Update creditFee to something else
   const onTransformHandler = async () => {
