@@ -25,14 +25,12 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { aspectRatioOptions, creditFee, defaultValues, transformationTypes } from "@/constants"
-import { title } from "process"
+
 import { CustomField } from "./CustomField"
 import { use, useState, useTransition } from "react"
 import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils"
 import { updateCredits } from "@/lib/actions/user.action"
-import MediaUploader from "./MediaUploader"
-import TransformedImage from "./TransformedImage"
- 
+
 export const formSchema = z.object({
     title: z.string(),
     aspectRatio: z.string().optional(),
@@ -45,10 +43,10 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   const transformationType = transformationTypes[type];
   const [image, setImage] = useState(data)
   const [newTransformation, setNewTransformation] = useState<Transformations | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting] = useState(false);
   const [isTransforming, setIsTransforming] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState(config)
-  const [isPending, startTransition] = useTransition()
+  const [startTransition] = useTransition()
 
   const initialValues = data && action === 'Update' ? {
     title: data?.title,
@@ -107,9 +105,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
 
     setNewTransformation(null)
     
-    startTransition(async () => {
-      await updateCredits(userId, creditFee)
-    })
+    
   }
 
   return (
@@ -196,29 +192,9 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
         )}
 
         <div className="media-uploader-field">
-          <CustomField 
-            control={form.control}
-            name="publicId"
-            className="flex size-full flex-col"
-            render={({ field }) => (
-              <MediaUploader 
-                onValueChange={field.onChange}
-                setImage={setImage}
-                publicId={field.value}
-                image={image}
-                type={type}
-              />
-            )}
-          />
+      
 
-          <TransformedImage 
-            image={image}
-            type={type}
-            title={form.getValues().title}
-            isTransforming={isTransforming}
-            setIsTransforming={setIsTransforming}
-            transformationConfig={transformationConfig}
-          />
+          
         </div>
 
         <div className="flex flex-col gap-4">
