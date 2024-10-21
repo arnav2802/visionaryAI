@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button"
 import {
   Form
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+
 import { aspectRatioOptions, defaultValues, transformationTypes } from "@/constants"
 
 import { CustomField } from "./CustomField"
@@ -105,15 +105,7 @@ const TransformationForm = ({ action, data = null, type,  config = null }: Trans
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <CustomField 
-          control={form.control}
-          name="title"
-          formLabel="Image Title"
-          className="w-full"
-          render={({ field }) => <Input {...field}
-          className="input-field" />}
-        />
-
+        
         {type === 'fill' && (
           <CustomField
             control={form.control}
@@ -139,52 +131,7 @@ const TransformationForm = ({ action, data = null, type,  config = null }: Trans
           />
         )}
 
-        {(type === 'remove' || type ==='recolor') && (
-          <div className="prompt-field">
-            <CustomField
-              control={form.control}
-              name="prompt"
-              formLabel={
-                type === 'remove' ? 'Object to remove' : 'Object to recolor'
-              }
-              className="w-full"
-              render={(({ field }) => (
-                <Input 
-                  value={field.value}
-                  className="input-field"
-                  onChange={(e) => onInputChangeHandler(
-                    'prompt',
-                    e.target.value,
-                    type,
-                    field.onChange
-                  )}
-                />
-              ))}
-            />
-
-            {type === 'recolor' && (
-              <CustomField
-                control={form.control}
-                name="color"
-                formLabel="Replacement Color"
-                className="w-full"
-                render={({ field }) => (
-                  <Input 
-                    value={field.value}
-                    className="input-field"
-                    onChange={(e) => onInputChangeHandler(
-                      'color',
-                      e.target.value,
-                      'recolor',
-                      field.onChange
-                    )}
-                  />
-                )}
-              />
-            )}
-          </div>
-        )}
-
+        
         <div className="media-uploader-field">
       
 
