@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-const nextConfig = {trailingSlash: false};
+const nextConfig = {};
 
 export default nextConfig;
