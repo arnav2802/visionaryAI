@@ -15,19 +15,14 @@ import {
 
 import { Button } from "@/components/ui/button"
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+  Form
+
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { aspectRatioOptions, defaultValues, transformationTypes } from "@/constants"
-import { title } from "process"
+
 import { CustomField } from "./CustomField"
-import { use, useState } from "react"
+import { useState } from "react"
 import { AspectRatioKey } from "@/lib/utils"
  
 export const formSchema = z.object({
@@ -39,12 +34,11 @@ export const formSchema = z.object({
 })
 
 const TransformationForm = ({ action, data = null, userId, type, creditBalance, config = null }: TransformationFormProps) => {
-  const transformationType = transformationTypes[type];
-  const [image, setImage] = useState(data)
-  const [newTransformation, setNewTransformation] = useState<Transformations | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isTransforming, seiIsTransforming] = useState(false);
-  const [transformationConfig, setTransformationConfig] = useState(config)
+
+  const [newTransformation,] = useState<Transformations | null>(null);
+  const [isSubmitting,] = useState(false);
+  const [isTransforming,] = useState(false);
+ 
 
   const initialValues = data && action === 'Update' ? {
     title: data?.title,
