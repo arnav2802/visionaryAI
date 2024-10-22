@@ -3,8 +3,13 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-empty-object-type": "error",
     "@typescript-eslint/no-unused-expressions": "error",
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "error"
+    "no-unused-vars": ["error", {
+      "vars": "all",
+      "args": "after-used",
+      "caughtErrors": "all",
+      "ignoreRestSiblings": false,
+      "reportUsedIgnorePattern": false
+  }]
   },
   "extends": ["next/core-web-vitals", "next/typescript"] 
 }
