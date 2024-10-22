@@ -15,7 +15,13 @@ import {
 
 import { Button } from "@/components/ui/button"
 import {
-  Form
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { aspectRatioOptions, creditFee, defaultValues, transformationTypes } from "@/constants"
@@ -39,16 +45,15 @@ export const formSchema = z.object({
     publicId: z.string(),
 })
 
-const TransformationForm = ({ action, data = null, type,  config = null }: TransformationFormProps) => {
+const TransformationForm = ({ action, data = null, userId, type, creditBalance, config = null }: TransformationFormProps) => {
   const transformationType = transformationTypes[type];
-  const [setImage] = useState(data)
+  const [image, setImage] = useState(data)
   const [newTransformation, setNewTransformation] = useState<Transformations | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTransforming, setIsTransforming] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState(config)
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
-
 
   const initialValues = data && action === 'Update' ? {
     title: data?.title,
@@ -135,11 +140,7 @@ const TransformationForm = ({ action, data = null, type,  config = null }: Trans
 
     setImage((prevState: any) => ({
       ...prevState,
-<<<<<<< HEAD
-      aspectRation: imageSize.aspectRatio,
-=======
       aspectRatio: imageSize.aspectRatio,
->>>>>>> 987e2f658021e20c5ae0bd7d9d7b215d167cc536
       width: imageSize.width,
       height: imageSize.height,
     }))
@@ -149,26 +150,6 @@ const TransformationForm = ({ action, data = null, type,  config = null }: Trans
     return onChangeField(value)
   }
 
-<<<<<<< HEAD
-
-  //TODO: Update creditFee to something else
-  const onTransformHandler = async () => {
-    setIsTransforming(true)
-    
-    setTransformationConfig(
-      deepMergeObjects(newTransformation, transformationConfig)
-    )
-
-    setNewTransformation(null)
-    
-    
-  }
-
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        
-=======
   const onInputChangeHandler = (fieldName: string, value: string, type: string, onChangeField: (value: string) => void) => {
     debounce(() => {
       setNewTransformation((prevState: any) => ({
@@ -215,7 +196,6 @@ const TransformationForm = ({ action, data = null, type,  config = null }: Trans
           className="input-field" />}
         />
 
->>>>>>> 987e2f658021e20c5ae0bd7d9d7b215d167cc536
         {type === 'fill' && (
           <CustomField
             control={form.control}
@@ -242,11 +222,6 @@ const TransformationForm = ({ action, data = null, type,  config = null }: Trans
           />
         )}
 
-<<<<<<< HEAD
-        
-        <div className="media-uploader-field">
-      
-=======
         {(type === 'remove' || type ==='recolor') && (
           <div className="prompt-field">
             <CustomField
@@ -269,10 +244,29 @@ const TransformationForm = ({ action, data = null, type,  config = null }: Trans
                 />
               )}
             />
->>>>>>> 987e2f658021e20c5ae0bd7d9d7b215d167cc536
 
-          
-        </div>
+            {type === 'recolor' && (
+              <CustomField
+                control={form.control}
+                name="color"
+                formLabel="Replacement Color"
+                className="w-full"
+                render={({ field }) => (
+                  <Input 
+                    value={field.value}
+                    className="input-field"
+                    onChange={(e) => onInputChangeHandler(
+                      'color',
+                      e.target.value,
+                      'recolor',
+                      field.onChange
+                    )}
+                  />
+                )}
+              />
+            )}
+          </div>
+        )}
 
         <div className="media-uploader-field">
           <CustomField 
