@@ -11,9 +11,9 @@ declare type Createuserentry = {
   };
   
   declare type UpdateUserParams = {
-    firstName: string;
-    lastName: string;
-    username: string;
+    firstName: string | null;
+    lastName: string | null;
+    username: string | null;
     photo: string;
   };
   
