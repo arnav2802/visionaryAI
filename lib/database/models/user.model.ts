@@ -13,11 +13,12 @@ const UserSchema = new Schema({
   },
   username: {
     type: String, // No required here, since it could be empty
+    required: true,
     unique: true,
   },
   photo: {
     type: String,
-    required: true,
+    
   },
   firstName: {
     type: String, // Optional
