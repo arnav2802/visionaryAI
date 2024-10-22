@@ -34,7 +34,7 @@ export async function addImage({ image, userId, path }: AddImageParams) {
     revalidatePath(path);
 
     return JSON.parse(JSON.stringify(newImage));
-  } catch (error) {
+  } catch (none) {//(error) {
     //handleError(error)
   }
 }
@@ -59,7 +59,7 @@ export async function updateImage({ image, userId, path }: UpdateImageParams) {
     revalidatePath(path);
 
     return JSON.parse(JSON.stringify(updatedImage));
-  } catch (error) {
+  } catch (none) {//(error) {
     //handleError(error)
   }
 }
@@ -87,7 +87,7 @@ export async function getImageById(imageId: string) {
     if(!image) throw new Error("Image not found");
 
     return JSON.parse(JSON.stringify(image));
-  } catch (error) {
+  } catch (none) { //(error) {
     //handleError(error)
   }
 }
@@ -145,7 +145,7 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
       totalPage: Math.ceil(totalImages / limit),
       savedImages,
     }
-  } catch (error) {
+  } catch (none) {//(error) {
     //handleError(error)
   }
 }
@@ -176,7 +176,7 @@ export async function getUserImages({
       data: JSON.parse(JSON.stringify(images)),
       totalPages: Math.ceil(totalImages / limit),
     };
-  } catch (error) {
+  } catch (none) {//(error) {
    //handleError(error);
   }
 }
