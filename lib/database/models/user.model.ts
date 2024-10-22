@@ -12,8 +12,7 @@ const UserSchema = new Schema({
     unique: true,
   },
   username: {
-    type: String,
-    required: true,
+    type: String, // No required here, since it could be empty
     unique: true,
   },
   photo: {
@@ -21,10 +20,10 @@ const UserSchema = new Schema({
     required: true,
   },
   firstName: {
-    type: String,
+    type: String, // Optional
   },
   lastName: {
-    type: String,
+    type: String, // Optional
   },
   planId: {
     type: Number,
