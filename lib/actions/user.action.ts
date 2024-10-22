@@ -29,9 +29,9 @@ export async function getUserById(userId: string) {
     if (!user) throw new Error("User not found");
 
     return JSON.parse(JSON.stringify(user));
-  } catch (error) {
+  } catch {null} //(error) {
    // handleError(error);
-  }
+ // }
 }
 
 // UPDATE
@@ -46,9 +46,9 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
     if (!updatedUser) throw new Error("User update failed");
     
     return JSON.parse(JSON.stringify(updatedUser));
-  } catch (error) {
+  } catch {null} //(error) {
   //  handleError(error);
-  }
+  //}
 }
 
 // DELETE
@@ -68,9 +68,9 @@ export async function deleteUser(clerkId: string) {
     revalidatePath("/");
 
     return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null;
-  } catch (error) {
+  } catch {null} //(error) {
    // handleError(error);
-  }
+  //}
 }
 
 // USE CREDITS
@@ -87,7 +87,7 @@ export async function updateCredits(userId: string, creditFee: number) {
     if(!updatedUserCredits) throw new Error("User credits update failed");
 
     return JSON.parse(JSON.stringify(updatedUserCredits));
-  } catch (error) {
+  } catch{null} //(error) {
   //  handleError(error);
-  }
+  //}
 }

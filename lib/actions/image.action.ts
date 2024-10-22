@@ -34,9 +34,9 @@ export async function addImage({ image, userId, path }: AddImageParams) {
     revalidatePath(path);
 
     return JSON.parse(JSON.stringify(newImage));
-  } catch (none) {//(error) {
+  } catch {null} //{(error) {
     //handleError(error)
-  }
+  //}
 }
 
 // UPDATE IMAGE
@@ -59,9 +59,9 @@ export async function updateImage({ image, userId, path }: UpdateImageParams) {
     revalidatePath(path);
 
     return JSON.parse(JSON.stringify(updatedImage));
-  } catch (none) {//(error) {
+  } catch {null} //{(error) {
     //handleError(error)
-  }
+  //}
 }
 
 // DELETE IMAGE
@@ -70,9 +70,10 @@ export async function deleteImage(imageId: string) {
     await connectToDatabase();
 
     await Image.findByIdAndDelete(imageId);
-  } catch (error) {
+  } catch {null}//(error) {
     //handleError(error)
-  } finally{
+  //} 
+  finally{
     redirect('/')
   }
 }
@@ -87,9 +88,9 @@ export async function getImageById(imageId: string) {
     if(!image) throw new Error("Image not found");
 
     return JSON.parse(JSON.stringify(image));
-  } catch (none) { //(error) {
+  } catch {null} //(error) {
     //handleError(error)
-  }
+  //}
 }
 
 // GET IMAGES
@@ -145,9 +146,9 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
       totalPage: Math.ceil(totalImages / limit),
       savedImages,
     }
-  } catch (none) {//(error) {
+  } catch {null}//(error) {
     //handleError(error)
-  }
+  //}
 }
 
 // GET IMAGES BY USER
@@ -176,7 +177,7 @@ export async function getUserImages({
       data: JSON.parse(JSON.stringify(images)),
       totalPages: Math.ceil(totalImages / limit),
     };
-  } catch (none) {//(error) {
+  } catch {null}//(error) {
    //handleError(error);
-  }
+  //}
 }
