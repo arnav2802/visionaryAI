@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 
 import User from "../database/models/user.model";
 import { connectToDatabase } from "../database/mongoose";
-import { handleError } from "../utils";
+//import { handleError } from "../utils";
 
 // CREATE
 export async function createUser(user: Createuserentry) {
@@ -15,7 +15,7 @@ export async function createUser(user: Createuserentry) {
 
     return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
-    handleError(error);
+   // handleError(error);
   }
 }
 
@@ -30,7 +30,7 @@ export async function getUserById(userId: string) {
 
     return JSON.parse(JSON.stringify(user));
   } catch (error) {
-    handleError(error);
+    //handleError(error);
   }
 }
 
@@ -47,7 +47,7 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
     
     return JSON.parse(JSON.stringify(updatedUser));
   } catch (error) {
-    handleError(error);
+   // handleError(error);
   }
 }
 
@@ -69,7 +69,7 @@ export async function deleteUser(clerkId: string) {
 
     return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null;
   } catch (error) {
-    handleError(error);
+   // handleError(error);
   }
 }
 
@@ -88,6 +88,6 @@ export async function updateCredits(userId: string, creditFee: number) {
 
     return JSON.parse(JSON.stringify(updatedUserCredits));
   } catch (error) {
-    handleError(error);
+    //handleError(error);
   }
 }

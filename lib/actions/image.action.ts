@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../database/mongoose";
-import { handleError } from "../utils";
+//import { handleError } from "../utils";
 import User from "../database/models/user.model";
 import Image from "../database/models/image.model";
 import { redirect } from "next/navigation";
@@ -35,7 +35,7 @@ export async function addImage({ image, userId, path }: AddImageParams) {
 
     return JSON.parse(JSON.stringify(newImage));
   } catch (error) {
-    handleError(error)
+    //handleError(error)
   }
 }
 
@@ -60,7 +60,7 @@ export async function updateImage({ image, userId, path }: UpdateImageParams) {
 
     return JSON.parse(JSON.stringify(updatedImage));
   } catch (error) {
-    handleError(error)
+    //handleError(error)
   }
 }
 
@@ -71,7 +71,7 @@ export async function deleteImage(imageId: string) {
 
     await Image.findByIdAndDelete(imageId);
   } catch (error) {
-    handleError(error)
+    //handleError(error)
   } finally{
     redirect('/')
   }
@@ -88,7 +88,7 @@ export async function getImageById(imageId: string) {
 
     return JSON.parse(JSON.stringify(image));
   } catch (error) {
-    handleError(error)
+    //handleError(error)
   }
 }
 
@@ -146,7 +146,7 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
       savedImages,
     }
   } catch (error) {
-    handleError(error)
+    //handleError(error)
   }
 }
 
@@ -177,6 +177,6 @@ export async function getUserImages({
       totalPages: Math.ceil(totalImages / limit),
     };
   } catch (error) {
-    handleError(error);
+   //handleError(error);
   }
 }
