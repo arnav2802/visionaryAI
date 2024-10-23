@@ -9,15 +9,17 @@ import { connectToDatabase } from "../database/mongoose";
 // CREATE
 export async function createUser(user: Createuserentry) {
   try {
-    await connectToDatabase();
+    await connectToDatabase(); // Ensure the connection is established
 
-    const newUser = await User.create(user);
+    const newUser = await User.create(user); // Create the user entry
 
-    return JSON.parse(JSON.stringify(newUser));
-  } catch {null}//(error) {
-    //handleError(error);
- // }
+    return JSON.parse(JSON.stringify(newUser)); // Return the created user data
+  } catch (error) {
+    console.error("Error creating user:", error); // Log the error for debugging
+    return null; // Optionally return null or handle error appropriately
+  }
 }
+
 
 // READ
 export async function getUserById(userId: string) {
