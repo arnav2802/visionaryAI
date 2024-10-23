@@ -5,9 +5,10 @@ declare type Createuserentry = {
     clerkId: string;
     email: string;
     username: string | null;
+    photo: string;
     firstName: string | null ;
     lastName: string | null;
-    photo: string;
+    
   };
   
   declare type UpdateUserParams = {
