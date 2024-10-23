@@ -25,15 +25,8 @@ const UserSchema = new Schema({
   },
   lastName: {
     type: String, // Optional
-  },
-  planId: {
-    type: Number,
-    default: 1,
-  },
-  creditBalance: {
-    type: Number,
-    default: 10,
-  },
+  }
+  
 });
 
 const User = models?.User || model("User", UserSchema);
