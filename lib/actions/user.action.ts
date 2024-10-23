@@ -9,16 +9,21 @@ import { connectToDatabase } from "../database/mongoose";
 // CREATE
 export async function createUser(user: Createuserentry) {
   try {
-    await connectToDatabase(); // Ensure the connection is established
+    await connectToDatabase();
 
-    const newUser = await User.create(user); // Create the user entry
+    console.log("Attempting to create user with data:", user); // Debug log for user data
 
-    return JSON.parse(JSON.stringify(newUser)); // Return the created user data
+    const newUser = await User.create(user); // Attempt user creation
+
+    console.log("User created:", newUser); // Log success
+
+    return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
-    console.error("Error creating user:", error); // Log the error for debugging
-    return null; // Optionally return null or handle error appropriately
+    console.error("Error creating user:", error); // Log detailed error
+    return null;
   }
 }
+
 
 
 // READ

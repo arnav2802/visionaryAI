@@ -62,15 +62,14 @@ export async function POST(req: Request) {
     const { id, email_addresses, image_url, first_name, last_name, username } = 
         evt.data;
 
-    const user = {
-      clerkId: id,
-      email: email_addresses[0].email_address,
-      username: username || "",
-      photo: image_url,
-      firstName: first_name || "",
-      lastName: last_name || "",
-      
-    };
+        const user = {
+          clerkId: id,
+          email: email_addresses[0]?.email_address || "", // Ensure email exists
+          username: username || "", // Provide default values for optional fields
+          photo: image_url || "", // Provide default if image_url is missing
+          firstName: first_name || "",
+          lastName: last_name || "",
+        };
 
     const newUser = await createUser(user);
 
