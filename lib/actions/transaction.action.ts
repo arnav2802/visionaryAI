@@ -1,13 +1,13 @@
-"use  server"
+"use server";
 
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
-//import { handleError } from "../utils";
 import { connectToDatabase } from "../database/mongoose";
 import Transaction from "../database/models/transaction.model";
 import { updateCredits } from "./user.action";
 
-export async function checkoutCredits(transaction: CheckoutTransactionParams){
+export async function checkoutCredits(transaction: CheckoutTransactionParams) {
+    // Ensure STRIPE_SECRET_KEY is explicitly cast to a string, even if undefined
     const stripe = new Stripe(String(process.env.STRIPE_SECRET_KEY || ""));
 
     const amount = Number(transaction.amount) * 100;
@@ -20,10 +20,10 @@ export async function checkoutCredits(transaction: CheckoutTransactionParams){
                     unit_amount: amount,
                     product_data: {
                         name: transaction.plan,
-                    }
+                    },
                 },
-                quantity: 1
-            }
+                quantity: 1,
+            },
         ],
         metadata: {
             plan: transaction.plan,
@@ -33,23 +33,26 @@ export async function checkoutCredits(transaction: CheckoutTransactionParams){
         mode: 'payment',
         success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/profile`,
         cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/`,
-    })
-    redirect(session.url!)
+    });
+
+    redirect(session.url!);
 }
 
-export async function createTransaction(transaction: CreateTransactionParams){
+export async function createTransaction(transaction: CreateTransactionParams) {
     try {
         await connectToDatabase();
 
-        // Create a new  transaction with a buyer
+        // Create a new transaction with a buyer
         const newTransaction = await Transaction.create({
-            ...transaction, buyer: transaction.buyerId
-        })
+            ...transaction, 
+            buyer: transaction.buyerId,
+        });
 
         await updateCredits(transaction.buyerId, transaction.credits);
 
         return JSON.parse(JSON.stringify(newTransaction));
-    } catch {null}// (error) {
-       // handleError(error)
-    //}
+    } catch {
+        // handleError(error)
+        return null;
+    }
 }
