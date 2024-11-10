@@ -45,7 +45,8 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTransforming, setIsTransforming] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState(config)
-  const [ startTransition] = useTransition()
+  const [startTransition] = useTransition();
+
   const router = useRouter()
 
   const initialValues = data && action === 'Update' ? {
@@ -157,18 +158,20 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   }
 
   const onTransformHandler = async () => {
-    setIsTransforming(true)
-    
-    setTransformationConfig(
-      deepMergeObjects(newTransformation, transformationConfig)
-    )
+  setIsTransforming(true);
 
-    setNewTransformation(null)
-    
-    startTransition(async () => {
-      await updateCredits(userId, creditFee)  /*mein yhaa hu maalik */
-    })
-  }
+  setTransformationConfig(
+    deepMergeObjects(newTransformation, transformationConfig)
+  );
+
+  setNewTransformation(null);
+
+  // This is the correct usage of startTransition
+  startTransition(async () => {
+    await updateCredits(userId, creditFee);  // The state update is wrapped in a transition
+  });
+};
+
 
   useEffect(() => {
     if(image && (type === 'restore' || type === 'removeBackground')){
