@@ -1,6 +1,7 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState } from "react";
+import { startTransition } from "react";
 
 import {
   AlertDialog,
@@ -18,7 +19,14 @@ import { deleteImage } from "@/lib/actions/image.action";
 import { Button } from "../ui/button";
 
 export const DeleteConfirmation = ({ imageId }: { imageId: string }) => {
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
+
+  const handleDelete = () => {
+    setIsPending(true);
+    startTransition(() => {
+      deleteImage(imageId).finally(() => setIsPending(false));
+    });
+  };
 
   return (
     <AlertDialog>
@@ -46,11 +54,7 @@ export const DeleteConfirmation = ({ imageId }: { imageId: string }) => {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             className="border bg-red-500 text-white hover:bg-red-600"
-            onClick={() =>
-              startTransition(async () => {
-                await deleteImage(imageId);
-              })
-            }
+            onClick={handleDelete}
           >
             {isPending ? "Deleting..." : "Delete"}
           </AlertDialogAction>
