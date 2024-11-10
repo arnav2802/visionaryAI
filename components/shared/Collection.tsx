@@ -20,7 +20,7 @@ import { Search } from "./Search";
 
 export const Collection = ({
   hasSearch = false,
-  //images,
+  images,
   totalPages = 1,
   page,
 }: {
