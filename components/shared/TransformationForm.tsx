@@ -158,19 +158,19 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   }
 
   const onTransformHandler = async () => {
-  setIsTransforming(true);
-
-  setTransformationConfig(
-    deepMergeObjects(newTransformation, transformationConfig)
-  );
-
-  setNewTransformation(null);
-
-  // This is the correct usage of startTransition
-  startTransition(async () => {
-    await updateCredits(userId, creditFee);  // The state update is wrapped in a transition
-  });
-};
+    setIsTransforming(true);
+  
+    setTransformationConfig(
+      deepMergeObjects(newTransformation, transformationConfig)
+    );
+  
+    setNewTransformation(null);
+  
+    // Correct use of startTransition here
+    startTransition(async () => {
+      await updateCredits(userId, creditFee);  // The state update is wrapped in a transition
+    });
+  };
 
 
   useEffect(() => {
