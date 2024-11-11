@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 
 import User from "../database/models/user.model";
 import { connectToDatabase } from "../database/mongoose";
-//import { handleError } from "../utils";
+import { handleError } from "../utils";
 
 // CREATE
 export async function createUser(user: Createuserentry) {
@@ -36,9 +36,9 @@ export async function getUserById(userId: string) {
     if (!user) throw new Error("User not found");
 
     return JSON.parse(JSON.stringify(user));
-  } catch {null} //(error) {
-   // handleError(error);
- // }
+  } catch (error) {
+  handleError(error);
+  }
 }
 
 // UPDATE
@@ -53,9 +53,9 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
     if (!updatedUser) throw new Error("User update failed");
     
     return JSON.parse(JSON.stringify(updatedUser));
-  } catch {null} //(error) {
-  //  handleError(error);
-  //}
+  } catch (error) {
+    handleError(error);
+  }
 }
 
 // DELETE
@@ -75,9 +75,9 @@ export async function deleteUser(clerkId: string) {
     revalidatePath("/");
 
     return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null;
-  } catch {null} //(error) {
-   // handleError(error);
-  //}
+  } catch (error) {
+   handleError(error);
+  }
 }
 
 // USE CREDITS
@@ -94,7 +94,7 @@ export async function updateCredits(userId: string, creditFee: number) {
     if(!updatedUserCredits) throw new Error("User credits update failed");
 
     return JSON.parse(JSON.stringify(updatedUserCredits));
-  } catch{null} //(error) {
-  //  handleError(error);
-  //}
+  } catch(error) {
+    handleError(error);
+  }
 }
