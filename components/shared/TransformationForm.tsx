@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import React from "react"
 
 import {
   Select,
@@ -46,8 +45,10 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTransforming, setIsTransforming] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState(config)
-  const [startTransition, isPending] = React.useTransition();
-
+  const [startTransition, isPending] = useTransition() as [
+    (callback: () => void | Promise<void>) => void,
+    boolean
+  ];
 
   const router = useRouter()
 
@@ -160,18 +161,19 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   }
 
   const onTransformHandler = async () => {
-  setIsTransforming(true);
+    setIsTransforming(true);
+  
+    setTransformationConfig(
+      deepMergeObjects(newTransformation, transformationConfig)
+    );
+  
+    setNewTransformation(null);
+  
+    startTransition(async () => {
+      await updateCredits(userId, creditFee);  
+    });
+  };
 
-  setTransformationConfig(
-    deepMergeObjects(newTransformation, transformationConfig)
-  );
-
-  setNewTransformation(null);
-
-  startTransition(async () => {
-    await updateCredits(userId, creditFee);
-  });
-};
 
   useEffect(() => {
     if(image && (type === 'restore' || type === 'removeBackground')){
