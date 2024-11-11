@@ -45,10 +45,8 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTransforming, setIsTransforming] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState(config)
-  const [startTransition, isPending] = useTransition() as [
-    (callback: () => void | Promise<void>) => void,
-    boolean
-  ];
+  const [startTransition] = useTransition();
+
 
   const router = useRouter()
 
