@@ -45,7 +45,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTransforming, setIsTransforming] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState(config)
-  const [startTransition] = useTransition();
+  const [startTransition ,  isPending] = useTransition();
 
   const router = useRouter()
 
@@ -166,12 +166,10 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   
     setNewTransformation(null);
   
-    // Correct use of startTransition here
     startTransition(async () => {
-      await updateCredits(userId, creditFee);  // The state update is wrapped in a transition
+      await updateCredits(userId, creditFee);
     });
   };
-
 
   useEffect(() => {
     if(image && (type === 'restore' || type === 'removeBackground')){
