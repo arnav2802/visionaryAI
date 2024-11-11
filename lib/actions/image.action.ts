@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../database/mongoose";
-//import { handleError } from "../utils";
+import { handleError } from "../utils";
 import User from "../database/models/user.model";
 import Image from "../database/models/image.model";
 import { redirect } from "next/navigation";
@@ -34,9 +34,9 @@ export async function addImage({ image, userId, path }: AddImageParams) {
     revalidatePath(path);
 
     return JSON.parse(JSON.stringify(newImage));
-  } catch {null} //{(error) {
-    //handleError(error)
-  //}
+  } catch (error) {
+    handleError(error)
+  }
 }
 
 // UPDATE IMAGE
@@ -59,9 +59,9 @@ export async function updateImage({ image, userId, path }: UpdateImageParams) {
     revalidatePath(path);
 
     return JSON.parse(JSON.stringify(updatedImage));
-  } catch {null} //{(error) {
-    //handleError(error)
-  //}
+  } catch (error) {
+    handleError(error)
+  }
 }
 
 // DELETE IMAGE
@@ -70,9 +70,9 @@ export async function deleteImage(imageId: string) {
     await connectToDatabase();
 
     await Image.findByIdAndDelete(imageId);
-  } catch {null}//(error) {
-    //handleError(error)
-  //} 
+  } catch (error) {
+    handleError(error)
+  } 
   finally{
     redirect('/')
   }
@@ -88,9 +88,9 @@ export async function getImageById(imageId: string) {
     if(!image) throw new Error("Image not found");
 
     return JSON.parse(JSON.stringify(image));
-  } catch {null} //(error) {
-    //handleError(error)
-  //}
+  } catch (error) {
+    handleError(error)
+  }
 }
 
 // GET IMAGES
@@ -146,9 +146,9 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
       totalPage: Math.ceil(totalImages / limit),
       savedImages,
     }
-  } catch {null}//(error) {
-    //handleError(error)
-  //}
+  } catch (error) {
+    handleError(error)
+  }
 }
 
 // GET IMAGES BY USER
@@ -177,7 +177,7 @@ export async function getUserImages({
       data: JSON.parse(JSON.stringify(images)),
       totalPages: Math.ceil(totalImages / limit),
     };
-  } catch {null}//(error) {
-   //handleError(error);
-  //}
+  } catch (error) {
+   handleError(error);
+  }
 }
