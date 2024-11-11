@@ -21,7 +21,7 @@ const Checkout = ({
 
   useEffect(() => {
     loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
-  }, [toast]);
+  }, []);
 
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
@@ -43,7 +43,7 @@ const Checkout = ({
         className: "error-toast",
       });
     }
-  }, []);
+  }, [toast]); // Add toast to the dependency array
 
   const onCheckout = async () => {
     const transaction = {
