@@ -175,7 +175,8 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
       startTransition(() => {
         updateCredits(userId, creditFee);
       });
-  };
+    };
+  }
 
 
   useEffect(() => {
