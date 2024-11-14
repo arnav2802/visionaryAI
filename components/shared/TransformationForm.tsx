@@ -171,12 +171,10 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   
     setNewTransformation(null);
   
-    function handleUpdate() {
-      startTransition(() => {
-        updateCredits(userId, creditFee);
-      });
-    };
-  }
+    startTransition(async () => {
+      await updateCredits(userId, creditFee);  
+    });
+  };
 
 
   useEffect(() => {
