@@ -62,7 +62,7 @@ const Sidebar = () => {
                                 )
                             })} 
                         <li className='flex-center cursor-pointer gap-2 p-4'>
-                            <UserButton afterSignOutUrl='/' showName /> 
+                            <UserButton afterSignOutUrl='/' showName />                  /* afterSignOutUrl */
                         </li>
                     </ul>
                 </SignedIn>
