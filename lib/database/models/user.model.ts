@@ -12,21 +12,28 @@ const UserSchema = new Schema({
     unique: true,
   },
   username: {
-    type: String, // No required here, since it could be empty
+    type: String,
     required: true,
     unique: true,
   },
   photo: {
     type: String,
-    
+    required: true,
   },
   firstName: {
-    type: String, // Optional
+    type: String,
   },
   lastName: {
-    type: String, // Optional
-  }
-  
+    type: String,
+  },
+  planId: {
+    type: Number,
+    default: 1,
+  },
+  creditBalance: {
+    type: Number,
+    default: 10,
+  },
 });
 
 const User = models?.User || model("User", UserSchema);
