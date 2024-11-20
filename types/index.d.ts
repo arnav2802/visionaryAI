@@ -8,7 +8,7 @@ declare type Createuserentry = {
     photo: string;
     firstName: string | null ;
     lastName: string | null;
-    creditBalance: string;
+    creditBalance: number;
     
   };
   

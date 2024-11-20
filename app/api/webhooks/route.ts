@@ -8,6 +8,7 @@ import { Webhook } from "svix";
 
 
 import { createUser, deleteUser, updateUser } from "@/lib/actions/user.action";
+import { creditFee } from "@/constants";
 
 export async function POST(req: Request) {
 
@@ -71,6 +72,7 @@ export async function POST(req: Request) {
           photo: image_url || "", // Provide default if image_url is missing
           firstName: first_name || "",
           lastName: last_name || "",
+          creditBalance: creditFee,
         };
 
     const newUser = await createUser(user);
