@@ -71,7 +71,7 @@ export async function POST(req: Request) {
           photo: image_url || "", // Provide default if image_url is missing
           firstName: first_name || "",
           lastName: last_name || "",
-          creditBalance : credit
+          creditBalance : credit,
         };
 
     const newUser = await createUser(user);
