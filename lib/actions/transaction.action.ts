@@ -5,6 +5,7 @@ import Stripe from "stripe";
 import { connectToDatabase } from "../database/mongoose";
 import Transaction from "../database/models/transaction.model";
 import { updateCredits } from "./user.action";
+import { handleError } from "../utils";
 
 export async function checkoutCredits(transaction: CheckoutTransactionParams) {
     // Ensure STRIPE_SECRET_KEY is explicitly cast to a string, even if undefined
@@ -51,8 +52,7 @@ export async function createTransaction(transaction: CreateTransactionParams) {
         await updateCredits(transaction.buyerId, transaction.credits);
 
         return JSON.parse(JSON.stringify(newTransaction));
-    } catch {
-        // handleError(error)
-        return null;
-    }
+    } catch (error) {
+        handleError(error)
+      }
 }

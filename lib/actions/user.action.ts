@@ -7,24 +7,17 @@ import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "../utils";
 
 // CREATE
-export async function createUser(user: Createuserentry) {
+export async function createUser(user: CreateUserParams) {
   try {
     await connectToDatabase();
 
-    console.log("Attempting to create user with data:", user); // Debug log for user data
-
-    const newUser = await User.create(user); // Attempt user creation
-
-    console.log("User created:", newUser); // Log success
+    const newUser = await User.create(user);
 
     return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
-    console.error("Error creating user:", error); // Log detailed error
-    return null;
+    handleError(error);
   }
 }
-
-
 
 // READ
 export async function getUserById(userId: string) {
@@ -37,7 +30,7 @@ export async function getUserById(userId: string) {
 
     return JSON.parse(JSON.stringify(user));
   } catch (error) {
-  handleError(error);
+    handleError(error);
   }
 }
 
@@ -76,7 +69,7 @@ export async function deleteUser(clerkId: string) {
 
     return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null;
   } catch (error) {
-   handleError(error);
+    handleError(error);
   }
 }
 
@@ -94,7 +87,7 @@ export async function updateCredits(userId: string, creditFee: number) {
     if(!updatedUserCredits) throw new Error("User credits update failed");
 
     return JSON.parse(JSON.stringify(updatedUserCredits));
-  } catch(error) {
+  } catch (error) {
     handleError(error);
   }
 }
