@@ -32,6 +32,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.1",
+    "sharp": "^0.33.5",
     "stripe": "^17.3.1",
     "svix": "^1.37.0",
     "tailwind-merge": "^2.5.4",
